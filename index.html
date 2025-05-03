@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les Petits Plats</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-[Manrope] bg-[#C8C4C4]">
+    <header
+      class="relative w-full h-screen bg-cover bg-center max-h-[666px]"
+      style="background-image: url('/assets/background.jpg')"
+    >
+      <div class="absolute inset-0 bg-black opacity-30"></div>
+
+      <div
+        id="headerContent"
+        class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white"
+      >
+        <img
+          src="assets/logo.png"
+          alt="Logo"
+          class="absolute top-[51px] left-[69px] h-6"
+        />
+
+        <h1 class="text-[44px] text-[#FFD15B] font-[Anton] mb-8 max-w-4xl">
+          CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET
+          DÉLICIEUSES
+        </h1>
+      </div>
+    </header>
+    <div
+      id="recipes"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
+    ></div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="/scripts/pages/main.js"></script>
+  </body>
+</html>
