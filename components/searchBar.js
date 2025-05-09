@@ -16,11 +16,11 @@ export function createSearchBar() {
         ✖
       </button>
       <button
-        class="p-4 bg-gray-800 rounded-md hover:bg-[#FFD15B] transition duration-300 ease-in-out m-2.5"
+        class="p-4 bg-gray-800 rounded-md hover:bg-[#FFD15B] transition duration-300 ease-in-out m-2.5 group"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 text-white hover:text-black transition duration-300 ease-in-out"
+          class="h-6 w-6 text-white group-hover:text-black transition duration-300 ease-in-out"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
