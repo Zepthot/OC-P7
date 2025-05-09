@@ -8,7 +8,7 @@ export function createRecipeCard(recipe) {
       <img class="h-64 w-full object-cover" src="/data/images/${
         recipe.image
       }" alt="${recipe.name}">
-      <span class="absolute top-5 right-5 bg-yellow-400 text-gray-800 text-xs py-1 px-4 rounded-full">${
+      <span class="absolute top-5 right-5 bg-[#FFD15B] text-gray-800 text-xs py-1 px-4 rounded-full">${
         recipe.time
       }min</span>
     </div>

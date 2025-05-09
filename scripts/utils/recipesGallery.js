@@ -15,4 +15,6 @@ export function renderRecipes(containerSelector) {
     const card = createRecipeCard(recipe);
     container.appendChild(card);
   });
+
+  document.getElementById('recipeCount').textContent = recipes.length;
 }

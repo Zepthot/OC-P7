@@ -1,3 +1,5 @@
+import { clearInput, styleInput } from './utils.js';
+
 export function setupSearchBarEvents(searchBarElement) {
   const searchInput = searchBarElement.querySelector('#searchInput');
   const clearButton = searchBarElement.querySelector('#clearButton');
@@ -7,31 +9,9 @@ export function setupSearchBarEvents(searchBarElement) {
     return;
   }
 
-  searchInput.addEventListener('input', () => {
-    if (searchInput.value.length > 0) {
-      clearButton.classList.remove(
-        'opacity-0',
-        'scale-90',
-        'pointer-events-none'
-      );
-      clearButton.classList.add(
-        'opacity-100',
-        'scale-100',
-        'pointer-events-auto'
-      );
-    } else {
-      clearButton.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-      clearButton.classList.remove(
-        'opacity-100',
-        'scale-100',
-        'pointer-events-auto'
-      );
-    }
-  });
+  searchInput.addEventListener('input', () =>
+    styleInput(searchInput, clearButton, 'scale-90', 'scale-100')
+  );
 
-  clearButton.addEventListener('click', () => {
-    searchInput.value = '';
-    searchInput.dispatchEvent(new Event('input'));
-    searchInput.focus();
-  });
+  clearButton.addEventListener('click', () => clearInput(searchInput));
 }

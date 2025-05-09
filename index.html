@@ -39,7 +39,16 @@
         </h1>
       </div>
     </header>
-    <div id="recipes" class="grid grid-cols-3 gap-12 p-28"></div>
+    <main>
+      <section class="flex justify-between items-center px-28 py-5">
+        <div id="filters" class="flex gap-16"></div>
+        <h2 class="text-lg font-[Anton]">
+          <span id="recipeCount">0</span> recettes
+        </h2>
+      </section>
+      <div id="active-filters" class="flex flex-wrap gap-4 px-28"></div>
+      <section id="recipes" class="grid grid-cols-3 gap-8 p-28 pt-9"></section>
+    </main>
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="/scripts/pages/main.js"></script>
   </body>
