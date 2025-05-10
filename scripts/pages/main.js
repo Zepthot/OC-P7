@@ -7,6 +7,8 @@ import { extractUniqueIngredients } from '../utils/ingredients.js';
 import { extractUniqueAppareils } from '../utils/appliances.js';
 import { extractUniqueUstensiles } from '../utils/ustensils.js';
 
+import { recipes } from '../../data/recipes.js';
+
 const headerContent = document.getElementById('headerContent');
 
 const searchBarElement = createSearchBar();
@@ -15,15 +17,15 @@ headerContent.appendChild(searchBarElement);
 setupSearchBarEvents(searchBarElement);
 
 const container = document.getElementById('filters');
-setupFilter(container, 'Ingrédients', extractUniqueIngredients);
-setupFilter(container, 'Appareils', extractUniqueAppareils);
-setupFilter(container, 'Ustensiles', extractUniqueUstensiles);
+setupFilter(container, 'Ingrédients', extractUniqueIngredients, 'ingredients');
+setupFilter(container, 'Appareils', extractUniqueAppareils, 'appliances');
+setupFilter(container, 'Ustensiles', extractUniqueUstensiles, 'ustensils');
 
-renderRecipes('recipes');
+renderRecipes('recipes', recipes);
 
-function setupFilter(container, label, extractorFn) {
+function setupFilter(container, label, extractorFn, type) {
   const items = extractorFn();
   const { dropdown, elements } = createFilterDropdown(label, items);
   container.appendChild(dropdown);
-  setupDropdownLogic(elements, items);
+  setupDropdownLogic(elements, items, type);
 }

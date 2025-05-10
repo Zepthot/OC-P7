@@ -1,7 +1,6 @@
-import { recipes } from '../../data/recipes.js';
 import { createRecipeCard } from '../../components/recipeCard.js';
 
-export function renderRecipes(containerSelector) {
+export function renderRecipes(containerSelector, arrayFiltred) {
   const container = document.getElementById(containerSelector);
 
   if (!container) {
@@ -11,10 +10,10 @@ export function renderRecipes(containerSelector) {
 
   container.innerHTML = '';
 
-  recipes.forEach((recipe) => {
+  arrayFiltred.forEach((recipe) => {
     const card = createRecipeCard(recipe);
     container.appendChild(card);
   });
 
-  document.getElementById('recipeCount').textContent = recipes.length;
+  document.getElementById('recipeCount').textContent = arrayFiltred.length;
 }

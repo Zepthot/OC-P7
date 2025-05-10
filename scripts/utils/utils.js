@@ -1,3 +1,6 @@
+import { activeFilters } from './filterState.js';
+import { updateFilteredRecipes } from './filterDropdown.js';
+
 export function clearInput(input) {
   input.value = '';
   input.dispatchEvent(new Event('input'));
@@ -14,7 +17,7 @@ export function styleInput(searchInput, clearButton, scale1, scale2) {
   }
 }
 
-export function addFilterTagInput(container, selectedItem, options) {
+export function addFilterTagInput(container, selectedItem, options, type) {
   const { searchInput, listEl, items, updateList } = options;
 
   const tag = document.createElement('div');
@@ -28,15 +31,20 @@ export function addFilterTagInput(container, selectedItem, options) {
   removeBtn.className =
     'w-6 h-6 rounded-full bg-[#FFD15B] text-black flex items-center justify-center text-sm transition group-hover:bg-black group-hover:text-[#FFD15B]';
 
-  tag.addEventListener('click', () =>
-    handleRemoveTag(selectedItem, items, searchInput, listEl, updateList)
-  );
+  tag.addEventListener('click', () => {
+    handleRemoveTag(selectedItem, items, searchInput, listEl, updateList);
+    activeFilters[type].delete(selectedItem.toLowerCase());
+    updateFilteredRecipes();
+  });
+
+  activeFilters[type].add(selectedItem.toLowerCase());
+  updateFilteredRecipes();
 
   tag.appendChild(removeBtn);
   container.appendChild(tag);
 }
 
-export function addFilterTagList(container, selectedItem, options) {
+export function addFilterTagList(container, selectedItem, options, type) {
   const { searchInput, listEl, items, updateList } = options;
 
   const tag = document.createElement('div');
@@ -50,9 +58,14 @@ export function addFilterTagList(container, selectedItem, options) {
   removeBtn.className =
     'ml-4 font-bold text-xl transition rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-black group-hover:text-[#FFD15B]';
 
-  tag.addEventListener('click', () =>
-    handleRemoveTag(selectedItem, items, searchInput, listEl, updateList)
-  );
+  tag.addEventListener('click', () => {
+    handleRemoveTag(selectedItem, items, searchInput, listEl, updateList);
+    activeFilters[type].delete(selectedItem.toLowerCase());
+    updateFilteredRecipes();
+  });
+
+  activeFilters[type].add(selectedItem.toLowerCase());
+  updateFilteredRecipes();
 
   tag.appendChild(removeBtn);
   container.appendChild(tag);
