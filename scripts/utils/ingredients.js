@@ -1,9 +1,7 @@
-import { recipes } from '../../data/recipes.js';
-
-export function extractUniqueIngredients() {
+export function extractUniqueIngredients(recipesList) {
   const ingredientsSet = new Set();
 
-  recipes.forEach((recipe) => {
+  recipesList.forEach((recipe) => {
     recipe.ingredients.forEach((item) => {
       ingredientsSet.add(item.ingredient.trim().toLowerCase());
     });

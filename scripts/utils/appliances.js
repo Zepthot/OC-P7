@@ -1,9 +1,7 @@
-import { recipes } from '../../data/recipes.js';
-
-export function extractUniqueAppareils() {
+export function extractUniqueAppareils(recipesList) {
   const appareilsSet = new Set();
 
-  recipes.forEach((recipe) => {
+  recipesList.forEach((recipe) => {
     if (recipe.appliance) {
       appareilsSet.add(recipe.appliance.trim().toLowerCase());
     }

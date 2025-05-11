@@ -7,8 +7,12 @@ import {
 import { renderRecipes } from './recipesGallery.js';
 import { recipes } from '../../data/recipes.js';
 import { activeFilters } from './filterState.js';
+import { extractUniqueIngredients } from './ingredients.js';
+import { extractUniqueAppareils } from './appliances.js';
+import { extractUniqueUstensiles } from './ustensils.js';
+import { dropdownItemRefs } from '../pages/main.js';
 
-export function setupDropdownLogic(elements, items, label) {
+export function setupDropdownLogic(elements, itemsRef, label) {
   const { toggleBtn, dropdownContent, searchInput, listEl } = elements;
   const vector = toggleBtn.querySelector('.vector-icon');
 
@@ -17,11 +21,11 @@ export function setupDropdownLogic(elements, items, label) {
   );
 
   searchInput.addEventListener('input', (event) =>
-    handleSearchInput(event, items, listEl)
+    handleSearchInput(event, itemsRef, listEl)
   );
 
   listEl.addEventListener('click', function (e) {
-    handleItemClick(e, items, listEl, searchInput, dropdownContent, label);
+    handleItemClick(e, itemsRef, listEl, searchInput, dropdownContent, label);
   });
 
   const clearButton = dropdownContent.querySelector('#clearButton');
@@ -62,6 +66,20 @@ export function updateFilteredRecipes() {
   });
 
   renderRecipes('recipes', filtered);
+  updateDropdownFilters(filtered);
+}
+
+function updateDropdownFilters(filteredRecipes) {
+  const ingredients = extractUniqueIngredients(filteredRecipes);
+  const appliances = extractUniqueAppareils(filteredRecipes);
+  const ustensils = extractUniqueUstensiles(filteredRecipes);
+
+  updateDropdown('ingredients', ingredients);
+  dropdownItemRefs.ingredients.value = ingredients;
+  updateDropdown('appliances', appliances);
+  dropdownItemRefs.appliances.value = appliances;
+  updateDropdown('ustensils', ustensils);
+  dropdownItemRefs.ustensils.value = ustensils;
 }
 
 function updateList(listEl, filteredItems) {
@@ -74,6 +92,26 @@ function updateList(listEl, filteredItems) {
   });
 }
 
+export function updateDropdown(label, newItems) {
+  const dropdown = document.querySelector(
+    `[data-type="${label}"] .dropdown-content ul`
+  );
+
+  if (!dropdown) {
+    console.error(`Dropdown list for ${label} not found.`);
+    return;
+  }
+
+  dropdown.innerHTML = '';
+
+  newItems.forEach((item) => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    li.className = 'px-5 py-1 cursor-pointer hover:bg-[#FFD15B]';
+    dropdown.appendChild(li);
+  });
+}
+
 function handleToggleClick(toggleBtn, dropdownContent, vector) {
   dropdownContent.classList.toggle('hidden');
   toggleBtn.classList.toggle('rounded-lg');
@@ -81,9 +119,9 @@ function handleToggleClick(toggleBtn, dropdownContent, vector) {
   vector.classList.toggle('rotate-180');
 }
 
-function handleSearchInput(event, items, listEl) {
+function handleSearchInput(event, itemsRef, listEl) {
   const query = event.target.value.toLowerCase();
-  const filteredItems = items.filter((item) =>
+  const filteredItems = itemsRef.value.filter((item) =>
     item.toLowerCase().includes(query)
   );
   updateList(listEl, filteredItems);
@@ -91,7 +129,7 @@ function handleSearchInput(event, items, listEl) {
 
 function handleItemClick(
   e,
-  items,
+  itemsRef,
   listEl,
   searchInput,
   dropdownContent,
@@ -100,6 +138,7 @@ function handleItemClick(
   if (e.target.tagName !== 'LI') return;
 
   const selectedItem = e.target.textContent;
+  const items = itemsRef.value;
 
   const index = items.indexOf(selectedItem);
   if (index !== -1) {
@@ -119,7 +158,7 @@ function handleItemClick(
     {
       searchInput,
       listEl,
-      items,
+      itemsRef,
       updateList,
     },
     label
@@ -131,7 +170,7 @@ function handleItemClick(
     {
       searchInput,
       listEl,
-      items,
+      itemsRef,
       updateList,
     },
     label

@@ -18,7 +18,7 @@ export function styleInput(searchInput, clearButton, scale1, scale2) {
 }
 
 export function addFilterTagInput(container, selectedItem, options, type) {
-  const { searchInput, listEl, items, updateList } = options;
+  const { searchInput, listEl, itemsRef, updateList } = options;
 
   const tag = document.createElement('div');
   tag.className =
@@ -32,7 +32,7 @@ export function addFilterTagInput(container, selectedItem, options, type) {
     'w-6 h-6 rounded-full bg-[#FFD15B] text-black flex items-center justify-center text-sm transition group-hover:bg-black group-hover:text-[#FFD15B]';
 
   tag.addEventListener('click', () => {
-    handleRemoveTag(selectedItem, items, searchInput, listEl, updateList);
+    handleRemoveTag(selectedItem, itemsRef, searchInput, listEl, updateList);
     activeFilters[type].delete(selectedItem.toLowerCase());
     updateFilteredRecipes();
   });
@@ -45,7 +45,7 @@ export function addFilterTagInput(container, selectedItem, options, type) {
 }
 
 export function addFilterTagList(container, selectedItem, options, type) {
-  const { searchInput, listEl, items, updateList } = options;
+  const { searchInput, listEl, itemsRef, updateList } = options;
 
   const tag = document.createElement('div');
   tag.className =
@@ -59,7 +59,7 @@ export function addFilterTagList(container, selectedItem, options, type) {
     'ml-4 font-bold text-xl transition rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-black group-hover:text-[#FFD15B]';
 
   tag.addEventListener('click', () => {
-    handleRemoveTag(selectedItem, items, searchInput, listEl, updateList);
+    handleRemoveTag(selectedItem, itemsRef, searchInput, listEl, updateList);
     activeFilters[type].delete(selectedItem.toLowerCase());
     updateFilteredRecipes();
   });
@@ -71,11 +71,19 @@ export function addFilterTagList(container, selectedItem, options, type) {
   container.appendChild(tag);
 }
 
-function handleRemoveTag(selectedItem, items, searchInput, listEl, updateList) {
+export function handleRemoveTag(
+  selectedItem,
+  itemsRef,
+  searchInput,
+  listEl,
+  updateList
+) {
   const tags = document.querySelectorAll(
     `[data-item="${selectedItem.toLowerCase()}"]`
   );
   tags.forEach((tag) => tag.remove());
+
+  const items = itemsRef.value;
 
   if (!items.includes(selectedItem)) {
     items.push(selectedItem);

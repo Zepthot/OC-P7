@@ -9,6 +9,8 @@ import { extractUniqueUstensiles } from '../utils/ustensils.js';
 
 import { recipes } from '../../data/recipes.js';
 
+export const dropdownItemRefs = {};
+
 const headerContent = document.getElementById('headerContent');
 
 const searchBarElement = createSearchBar();
@@ -16,16 +18,47 @@ headerContent.appendChild(searchBarElement);
 
 setupSearchBarEvents(searchBarElement);
 
-const container = document.getElementById('filters');
-setupFilter(container, 'Ingrédients', extractUniqueIngredients, 'ingredients');
-setupFilter(container, 'Appareils', extractUniqueAppareils, 'appliances');
-setupFilter(container, 'Ustensiles', extractUniqueUstensiles, 'ustensils');
+let filteredRecipes = [...recipes];
 
-renderRecipes('recipes', recipes);
+updateInterface(filteredRecipes);
 
 function setupFilter(container, label, extractorFn, type) {
-  const items = extractorFn();
-  const { dropdown, elements } = createFilterDropdown(label, items);
+  const itemsRef = { value: extractorFn(filteredRecipes) };
+  dropdownItemRefs[type] = itemsRef;
+  const { dropdown, elements } = createFilterDropdown(
+    label,
+    itemsRef.value,
+    type
+  );
   container.appendChild(dropdown);
-  setupDropdownLogic(elements, items, type);
+  setupDropdownLogic(elements, itemsRef, type);
+}
+
+function updateInterface(filteredRecipes) {
+  renderRecipes('recipes', filteredRecipes);
+
+  const container = document.getElementById('filters');
+  container.innerHTML = '';
+
+  setupFilter(
+    container,
+    'Ingrédients',
+    extractUniqueIngredients,
+    'ingredients',
+    filteredRecipes
+  );
+  setupFilter(
+    container,
+    'Appareils',
+    extractUniqueAppareils,
+    'appliances',
+    filteredRecipes
+  );
+  setupFilter(
+    container,
+    'Ustensiles',
+    extractUniqueUstensiles,
+    'ustensils',
+    filteredRecipes
+  );
 }

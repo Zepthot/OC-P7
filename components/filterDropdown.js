@@ -1,4 +1,4 @@
-export function createFilterDropdown(title, items) {
+export function createFilterDropdown(title, items, type) {
   const dropdown = document.createElement('div');
   dropdown.className = 'filter-dropdown relative w-full max-w-xs';
 
@@ -53,6 +53,7 @@ export function createFilterDropdown(title, items) {
   };
 
   renderItemList(elements.listEl, items);
+  dropdown.setAttribute('data-type', type);
 
   return { dropdown, elements };
 }
