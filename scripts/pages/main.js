@@ -1,7 +1,7 @@
-import { createSearchBar } from '../../components/searchBar.js';
+import { createSearchBar } from '../../templates/searchBar.js';
 import { setupSearchBarEvents } from '../../scripts/utils/searchBar.js';
 import { renderRecipes } from '../../scripts/utils/recipesGallery.js';
-import { createFilterDropdown } from '../../components/filterDropdown.js';
+import { createFilterDropdown } from '../../templates/filterDropdown.js';
 import { setupDropdownLogic } from '../utils/filterDropdown.js';
 import { extractUniqueIngredients } from '../utils/ingredients.js';
 import { extractUniqueAppareils } from '../utils/appliances.js';

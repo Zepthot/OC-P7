@@ -1,4 +1,4 @@
-import { createRecipeCard } from '../../components/recipeCard.js';
+import { createRecipeCard } from '../../templates/recipeCard.js';
 
 export function renderRecipes(containerSelector, arrayFiltred) {
   const container = document.getElementById(containerSelector);
