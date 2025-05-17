@@ -24,6 +24,9 @@ export function setupSearchBarEvents(searchBarElement) {
 
     if (query.length < 3) {
       renderRecipes('recipes', recipes);
+      const recipesSection = document.getElementById('recipes');
+      recipesSection.classList.add('grid');
+      recipesSection.classList.remove('d-flex');
       updateDropdownFilters(recipes);
       return;
     }
