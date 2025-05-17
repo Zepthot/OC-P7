@@ -1,7 +1,7 @@
 export function displayNoResults(query) {
   const recipesSection = document.getElementById('recipes');
-  recipesSection.classList = '';
-  recipesSection.classList.add('d-flex', 'p-28', 'pt-9');
+  recipesSection.classList.remove('grid');
+  recipesSection.classList.add('d-flex');
 
   recipesSection.innerHTML = `
     <div class="text-center text-gray-700 w-full">

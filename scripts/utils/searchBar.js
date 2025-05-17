@@ -24,11 +24,14 @@ export function setupSearchBarEvents(searchBarElement) {
 
     if (query.length < 3) {
       renderRecipes('recipes', recipes);
+      const recipesSection = document.getElementById('recipes');
+      recipesSection.classList.add('grid');
+      recipesSection.classList.remove('d-flex');
       updateDropdownFilters(recipes);
       return;
     }
 
-    const filteredRecipes = filterRecipesWithFor(recipes, query);
+    const filteredRecipes = filterRecipesWithForEach(recipes, query);
     if (filteredRecipes.length === 0) {
       displayNoResults(query);
     } else {
@@ -38,11 +41,12 @@ export function setupSearchBarEvents(searchBarElement) {
   });
 }
 
-function filterRecipesWithFor(recipes, query) {
+function filterRecipesWithForEach(recipes, query) {
   const results = [];
 
-  for (let i = 0; i < recipes.length; i++) {
-    const recipe = recipes[i];
+  const lowerQuery = query.toLowerCase();
+
+  recipes.forEach((recipe) => {
     const name = recipe.name.toLowerCase();
     const description = recipe.description.toLowerCase();
     const ingredients = recipe.ingredients.map((ing) =>
@@ -50,13 +54,13 @@ function filterRecipesWithFor(recipes, query) {
     );
 
     if (
-      name.includes(query) ||
-      description.includes(query) ||
-      ingredients.some((ing) => ing.includes(query))
+      name.includes(lowerQuery) ||
+      description.includes(lowerQuery) ||
+      ingredients.some((ing) => ing.includes(lowerQuery))
     ) {
       results.push(recipe);
     }
-  }
+  });
 
   return results;
 }
