@@ -31,7 +31,7 @@ export function setupSearchBarEvents(searchBarElement) {
       return;
     }
 
-    const filteredRecipes = filterRecipesWithForEach(recipes, query);
+    const filteredRecipes = filterRecipesWithFilter(recipes, query);
     if (filteredRecipes.length === 0) {
       displayNoResults(query);
     } else {
@@ -41,26 +41,20 @@ export function setupSearchBarEvents(searchBarElement) {
   });
 }
 
-function filterRecipesWithForEach(recipes, query) {
-  const results = [];
-
+function filterRecipesWithFilter(recipes, query) {
   const lowerQuery = query.toLowerCase();
 
-  recipes.forEach((recipe) => {
+  return recipes.filter((recipe) => {
     const name = recipe.name.toLowerCase();
     const description = recipe.description.toLowerCase();
     const ingredients = recipe.ingredients.map((ing) =>
       ing.ingredient.toLowerCase()
     );
 
-    if (
+    return (
       name.includes(lowerQuery) ||
       description.includes(lowerQuery) ||
       ingredients.some((ing) => ing.includes(lowerQuery))
-    ) {
-      results.push(recipe);
-    }
+    );
   });
-
-  return results;
 }
