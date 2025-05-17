@@ -1,4 +1,8 @@
 import { clearInput, styleInput } from './utils.js';
+import { renderRecipes } from './recipesGallery.js';
+import { updateDropdownFilters } from './filterDropdown.js';
+import { displayNoResults } from '../../templates/noResults.js';
+import { recipes } from '../../data/recipes.js';
 
 export function setupSearchBarEvents(searchBarElement) {
   const searchInput = searchBarElement.querySelector('#searchInput');
@@ -14,4 +18,45 @@ export function setupSearchBarEvents(searchBarElement) {
   );
 
   clearButton.addEventListener('click', () => clearInput(searchInput));
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+
+    if (query.length < 3) {
+      renderRecipes('recipes', recipes);
+      updateDropdownFilters(recipes);
+      return;
+    }
+
+    const filteredRecipes = filterRecipesWithFor(recipes, query);
+    if (filteredRecipes.length === 0) {
+      displayNoResults(query);
+    } else {
+      renderRecipes('recipes', filteredRecipes);
+      updateDropdownFilters(filteredRecipes);
+    }
+  });
+}
+
+function filterRecipesWithFor(recipes, query) {
+  const results = [];
+
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+    const name = recipe.name.toLowerCase();
+    const description = recipe.description.toLowerCase();
+    const ingredients = recipe.ingredients.map((ing) =>
+      ing.ingredient.toLowerCase()
+    );
+
+    if (
+      name.includes(query) ||
+      description.includes(query) ||
+      ingredients.some((ing) => ing.includes(query))
+    ) {
+      results.push(recipe);
+    }
+  }
+
+  return results;
 }

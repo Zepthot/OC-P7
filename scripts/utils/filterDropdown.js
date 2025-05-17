@@ -69,7 +69,7 @@ export function updateFilteredRecipes() {
   updateDropdownFilters(filtered);
 }
 
-function updateDropdownFilters(filteredRecipes) {
+export function updateDropdownFilters(filteredRecipes) {
   const ingredients = extractUniqueIngredients(filteredRecipes);
   const appliances = extractUniqueAppareils(filteredRecipes);
   const ustensils = extractUniqueUstensiles(filteredRecipes);
