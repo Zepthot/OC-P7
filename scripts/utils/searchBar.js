@@ -43,8 +43,10 @@ export function setupSearchBarEvents(searchBarElement) {
 
 function filterRecipesWithFor(recipes, query) {
   const results = [];
+  const lowerQuery = query.toLowerCase();
+  const length = recipes.length;
 
-  for (let i = 0; i < recipes.length; i++) {
+  for (let i = 0; i < length; i++) {
     const recipe = recipes[i];
     const name = recipe.name.toLowerCase();
     const description = recipe.description.toLowerCase();
@@ -53,9 +55,9 @@ function filterRecipesWithFor(recipes, query) {
     );
 
     if (
-      name.includes(query) ||
-      description.includes(query) ||
-      ingredients.some((ing) => ing.includes(query))
+      name.includes(lowerQuery) ||
+      description.includes(lowerQuery) ||
+      ingredients.some((ing) => ing.includes(lowerQuery))
     ) {
       results.push(recipe);
     }
