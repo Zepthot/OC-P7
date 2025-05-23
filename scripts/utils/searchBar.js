@@ -20,7 +20,8 @@ export function setupSearchBarEvents(searchBarElement) {
   clearButton.addEventListener('click', () => clearInput(searchInput));
 
   searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.trim().toLowerCase();
+    const rawQuery = e.target.value;
+    const query = sanitizeInput(rawQuery.toLowerCase().trim());
 
     if (query.length < 3) {
       renderRecipes('recipes', recipes);
@@ -39,6 +40,10 @@ export function setupSearchBarEvents(searchBarElement) {
       updateDropdownFilters(filteredRecipes);
     }
   });
+}
+
+function sanitizeInput(input) {
+  return input.replace(/[^a-zA-Z0-9À-ÿ\s'-]/g, '');
 }
 
 function filterRecipesWithForEach(recipes, query) {
